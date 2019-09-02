@@ -80,6 +80,12 @@ class Optimiser:
         self.v_bound = data_param["variables"]["var_boundaries"]
         self.v_sig = data_param["variables"]["var_signal"]
         self.v_invmass = data_param["variables"]["var_inv_mass"]
+       # self.v_etaLc = data_param["variables"]["var_eta_Lc"]
+        #self.v_etaprong3 = data_param["variables"]["var_eta_prong3"]
+       # self.v_etaprong0 = data_param["variables"]["var_etaprong0"]
+       # self.v_etaprong1 = data_param["variables"]["var_etaprong1"]
+       # self.v_etaprong2 = data_param["variables"]["var_etaprong2"]
+       # self.v_etaprong3 = data_param["variables"]["var_etaprong3"]
         self.v_cuts = data_param["variables"].get("var_cuts", [])
         self.v_corrx = data_param["variables"]["var_correlation"][0]
         self.v_corry = data_param["variables"]["var_correlation"][1]
@@ -142,6 +148,8 @@ class Optimiser:
         self.p_sigmamb = data_param["ml"]["opt"]["sigma_MB"]
         self.p_taa = data_param["ml"]["opt"]["Taa"]
         self.p_br = data_param["ml"]["opt"]["BR"]
+        self.p_brm = data_param["ml"]["opt"]["BRm"]
+        self.p_brd = data_param["ml"]["opt"]["BRd"]
         self.p_fprompt = data_param["ml"]["opt"]["f_prompt"]
         self.p_bkgfracopt = data_param["ml"]["opt"]["bkg_data_fraction"]
         self.p_nstepsign = data_param["ml"]["opt"]["num_steps"]
@@ -312,7 +320,38 @@ class Optimiser:
         decisionboundaries(
             names_2var, trainedmodels_2var, self.s_suffix+"2var", x_test_boundary,
             self.df_ytest, self.dirmlplot)
+    
+    
+    def scale_signal(self):
+         gensignal = self.df_mcgen[self.df_mcgen["ismcprompt"] == 1]
+         recsignal = self.df_mc[self.df_mc["ismcprompt"] == 1]
+         gen = len(gensignal)
+         rec = len(recsignal)
+         eta_arr_genp0 = gensignal['eta_cand'].values
+         eta_arr_recp0 = recsignal['eta_Lc'].values
+         eta_arr_recp1 = recsignal['eta_prong3'].values
+         gen_eta = 0
+         rec_eta = 0
+        
+         for eta_val in np.nditer(eta_arr_genp0):
+             if abs(eta_val) < 1:
+                gen_eta +=1
 
+         for eta_val1, eta_val2 in zip(eta_arr_recp0, eta_arr_recp1):
+             if abs(eta_val1) < 1 and abs(eta_val2) < 1:
+                rec_eta += 1
+                
+         self.logger.info("the br1 is : %f",self.p_brm)
+         self.logger.info("the br2 is: %f",self.p_brd)
+         self.logger.info("the total gen is: %d", gen)
+         self.logger.info("the total rec is: %d", rec)
+         self.logger.info("the gen in eta is: %d", gen_eta)
+         self.logger.info("the rec in eta is: %d", rec_eta)
+         scaling_factor = (gen * self.p_brm * self.p_brd * rec) / (gen_eta * rec_eta)
+         self.logger.info("the scaling factor is: %f", scaling_factor)
+         return scaling_factor
+         
+                  
     @staticmethod
     def calceff(num, den):
         eff = num / den

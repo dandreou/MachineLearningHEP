@@ -50,7 +50,7 @@ LbITS2:
 #              dist_12_Lc, dist_23_Lc, max_norm_d0d0exp_Lc, sum_d0d0_prongs_Lc, dca_prong0_Lc, dca_prong1_Lc, dca_prong2_Lc]
     var_all: [d_len, d_len_xy, norm_dl_xy, cos_p, cos_p_xy, imp_par_xy, dca, cos_t_star, imp_par_prod, ctau, pt_prong0,
               pt_prong1, pt_prong2, pt_prong3, imp_par_prong0, imp_par_prong1, imp_par_prong2, imp_par_prong3, inv_mass_Lc, 
-              imp_par_Lc, pt_Lc, y_Lc, d_len_Lc, d_len_xy_Lc, norm_dl_xy_Lc, cos_p_Lc, cos_p_xy_Lc, imp_par_xy_Lc, dca_Lc, sig_vert_Lc, 
+              imp_par_Lc, pt_Lc, y_Lc, eta_Lc, d_len_Lc, d_len_xy_Lc, norm_dl_xy_Lc, cos_p_Lc, cos_p_xy_Lc, imp_par_xy_Lc, dca_Lc, sig_vert_Lc, 
               dist_12_Lc, dist_23_Lc, max_norm_d0d0exp_Lc, sum_d0d0_prongs_Lc, dca_prong0_Lc, dca_prong1_Lc, dca_prong2_Lc,
               inv_mass, pt_cand, phi_cand, cand_type, y_cand, eta_prong0, eta_prong1, eta_prong2, eta_prong3, run_number, ev_id,
               nsigTPC_Pi_0, nsigTPC_K_0, nsigTPC_Pr_0, nsigTOF_Pi_0, nsigTOF_K_0, nsigTOF_Pr_0,
@@ -66,7 +66,7 @@ LbITS2:
               ev_id, n_tracklets,V0Amult, trigger_hasbit_INT7, trigger_hasbit_HighMultSPD,
               trigger_hasbit_HighMultV0, trigger_hasclass_INT7, trigger_hasclass_HighMultSPD,
               trigger_hasclass_HighMultV0, n_tracklets_corr, v0m, v0m_eq, z_vtx_gen]
-    var_gen: [y_cand, pt_cand, cand_type, run_number, ev_id]
+    var_gen: [y_cand, pt_cand, cand_type, run_number, ev_id, eta_cand]
     var_evt_match: [run_number, ev_id]
     var_training: [d_len, d_len_xy, norm_dl_xy, cos_p, cos_p_xy, imp_par_xy, dca, cos_t_star, imp_par_prod, ctau, imp_par_prong0, 
                    imp_par_prong1, imp_par_prong2, imp_par_prong3, inv_mass_Lc, 
@@ -132,11 +132,11 @@ LbITS2:
       seedmerge: [12] #list of periods
       period: [LHC13d19] #list of periods
       unmerged_tree_dir: [/data/TTree/LbkAnyITS2ITS3Improver/vAN-20190824_ROOT6-1/ITS2_13d19/154_20190825-0840/merged] #list of periods
-      pkl: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/154_20190825-0840/pkl] #list of periods
-      pkl_skimmed: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/154_20190825-0840/pklsk] #list of periods
-      pkl_skimmed_merge_for_ml: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/154_20190825-0840/pklskml] #list of periods
-      pkl_skimmed_merge_for_ml_all: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/154_20190825-0840/ITS2Upgr_13_bkg_mltot
-      pkl_evtcounter_all: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/154_20190825-0840/ITS2Upgr_13_bkg_evttot
+      pkl: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/154_20190825-0840/pkldimitra] #list of periods
+      pkl_skimmed: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/154_20190825-0840/pklskdimitra] #list of periods
+      pkl_skimmed_merge_for_ml: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/154_20190825-0840/pklskmldimitra] #list of periods
+      pkl_skimmed_merge_for_ml_all: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/154_20190825-0840/ITS2Upgr_13_bkg_mltotdimitra
+      pkl_evtcounter_all: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/154_20190825-0840/ITS2Upgr_13_bkg_evttotdimitra
     mc:
       nperiods: 1
       nprocessesparallel: 50
@@ -147,11 +147,11 @@ LbITS2:
       seedmerge: [12] #list of periods
       period: [LHC13d19] #list of periods
       unmerged_tree_dir: [/data/TTree/LbkAnyITS2ITS3Improver/vAN-20190824_ROOT6-1/ITS2_13d19/153_20190825-0840/merged] #list of periods
-      pkl: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/153_20190825-0840/pkl] #list of periods
-      pkl_skimmed: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/153_20190825-0840/pklsk] #list of periods
-      pkl_skimmed_merge_for_ml: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/153_20190825-0840/pklskml] #list of periods
-      pkl_skimmed_merge_for_ml_all: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/153_20190825-0840/ITS2Upgr_13_sig_mltot
-      pkl_evtcounter_all: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/153_20190825-0840/ITS2Upgr_13_sig_evttot
+      pkl: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/153_20190825-0840/pkldimitra] #list of periods
+      pkl_skimmed: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/153_20190825-0840/pklskdimitra] #list of periods
+      pkl_skimmed_merge_for_ml: [/data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/153_20190825-0840/pklskmldimitra] #list of periods
+      pkl_skimmed_merge_for_ml_all: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/153_20190825-0840/ITS2Upgr_13_sig_mltotdimitra
+      pkl_evtcounter_all: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/ITS2_13d19_v2/153_20190825-0840/ITS2Upgr_13_sig_evttotdimitra
   ml:
     nbkg: 500000
     nsig: 500000
@@ -167,8 +167,8 @@ LbITS2:
     binmax: [8,20,99] #list of nbins
     mltype: BinaryClassification
     ncorescrossval: 10 
-    mlplot: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/mlplot # to be removed
-    mlout: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/mlout # to be removed
+    mlplot: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/mlplot/dimitra
+    mlout: /data/Derived/LbkAnyITS2/vAN-20190824_ROOT6-1/mlout/dimitra
 
     opt:
       filename_fonll: 'data/fonll/fo_pp_d0meson_5TeV_y0p5.csv' # file with FONLL predictions
@@ -176,6 +176,8 @@ LbITS2:
       FF: 0.6086 # fragmentation fraction
       sigma_MB: 57.8e-3  # Minimum Bias cross section (pp) 50.87e-3 [b], 1 for Pb-Pb
       Taa: 1 # 23260 [b^-1] in 0-10% Pb-Pb, 3917 [b^-1] in 30-50% Pb-Pb, 1 for pp
+      BRm: 5.7e-3 # branching ratio of the decay Lb->Lcpi
+      BRd: 5.e-2 # branching ratio of the decay Lc->pKpi
       BR: 3.89e-2 # branching ratio of the decay Lc->pK0s * K0s->pi+pi-
       f_prompt: 0.9 # estimated fraction of prompt candidates
       bkg_data_fraction: 0.1 # fraction of real data used in the estimation

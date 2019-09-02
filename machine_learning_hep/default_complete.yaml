@@ -1,4 +1,4 @@
-case: LcpK0spp
+case: LbITS2
 download:
   alice:
     activate: false
@@ -24,7 +24,7 @@ mergingperiods:
     activate: false
 
 ml_study:   
-  activate: false
+  activate: true
   doscancuts: false
   applytodatamc: false
   doroc: false
@@ -38,7 +38,8 @@ ml_study:
   dosignifopt: false
   doefficiency: false
   dotesting: false
-  dotraining: true
+  scalesignal: true 
+  dotraining: false
 
 mlapplication:
   data:
@@ -60,7 +61,7 @@ analysis:
   dofit: true
   dojetstudies: false
   doeff: true
-  docross: true
+  docross: false
 
 systematics:
   probvariation: false
